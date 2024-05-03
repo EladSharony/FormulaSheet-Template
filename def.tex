@@ -1,0 +1,98 @@
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage{geometry}
+\geometry{a4paper, left=5mm, right=5mm, top=5mm, bottom=12mm}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{0.4cm}
+\setlength{\columnseprule}{0.5pt}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{dsfont}
+\usepackage{hyperref}
+\hypersetup
+{
+pdfauthor={https://github.com/EladSharony},
+}
+
+
+\usepackage{xcolor}
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\definecolor{mygreen}{RGB}{78, 153, 67}     % A vibrant green
+\definecolor{myred}{RGB}{220, 53, 69}       % A bright red
+\definecolor{myyellow}{cmyk}{0,0,1,0}       % Pure yellow
+\definecolor{mydarkblue}{cmyk}{1,.6,0,.4}   % A darker shade of blue
+\definecolor{mypurple}{RGB}{104, 33, 122}   % A deep purple
+\definecolor{myorange}{RGB}{253, 126, 20}   % A bright orange
+\definecolor{mygray}{gray}{0.6}             % A medium gray, 0 is black, 1 is white
+\definecolor{myteal}{RGB}{0,128,128}        % A teal color
+
+% TikZ settings for diagrams
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+
+% Font and typography settings
+\usepackage[T1]{fontenc}
+\usepackage[nosf]{kpfonts} % Keeping kpfonts for mathematical symbols
+\usepackage{sourcesanspro} % Sans-serif font for clarity
+
+% Microtype for improved typography
+\usepackage{microtype}
+
+% Apply color to all math environments
+% \everymath{\color{myblue}}
+% \everydisplay{\color{myblue}}
+
+% Customized spacing and no page numbering
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty} % Remove page numbers
+
+% Layer declaration for TikZ drawings
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\usepackage{titlesec} % For customizing section titles
+% Redefining section titles for a more compact look
+\titleformat{\section}
+  {\normalfont\large\sffamily\bfseries\color{myblue}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\sffamily\bfseries\color{mygreen}}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\sffamily\bfseries\color{mypurple}}
+  {\thesubsubsection}{1em}{}
+
+% Adjust spacing before and after section titles
+\titlespacing*{\section}{0pt}{1ex plus 1ex minus .2ex}{0.5ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1ex plus 1ex minus .2ex}{0.5ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{1ex plus 1ex minus .2ex}{0.5ex plus .2ex}
+
+
+\usepackage{enumitem} % Ensure this is in your def.tex if not already included
+
+% Adjust spacing for enumerate environment to make it more compact
+\setlist[enumerate]{
+    topsep=0pt, % Space between the first item and the preceding paragraph
+    partopsep=0pt, % Extra space added to topsep when environment starts a new paragraph
+    parsep=0pt, % Space between paragraphs within an item
+    itemsep=1pt, % Space between items
+    leftmargin=* % Adjusts the left margin to align with the surrounding text
+}
+\setlist[itemize]{
+    topsep=0pt, % Space between the first item and the preceding paragraph
+    partopsep=0pt, % Extra space added to topsep when environment starts a new paragraph
+    parsep=0pt, % Space between paragraphs within an item
+    itemsep=1pt, % Space between items
+    leftmargin=* % Adjusts the left margin to align with the surrounding text
+}
+
+% Reduce spacing around all display math, affecting align environments
+\AtBeginDocument{
+  \setlength{\abovedisplayskip}{0pt} % Space above display math
+  \setlength{\abovedisplayshortskip}{0pt} % Space above display math when preceding text line is short
+  \setlength{\belowdisplayskip}{0pt} % Space below display math
+  \setlength{\belowdisplayshortskip}{0pt} % Space below display math when following text line is short
+}

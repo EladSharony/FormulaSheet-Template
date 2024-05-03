@@ -1,0 +1,135 @@
+\section*{Control in state space}
+\subsection*{State space modeling}
+\begin{eqnarray*}
+P\left(s\right)=\left[\begin{array}{c|c}
+\boldsymbol{A} & \boldsymbol{B}\\
+\hline \boldsymbol{C} & \boldsymbol{D}
+\end{array}\right] & : & \begin{cases}
+\dot{\boldsymbol{x}}\left(t\right)=\boldsymbol{A}\boldsymbol{x}\left(t\right)+\boldsymbol{B}\boldsymbol{u}\left(t\right)\\
+\boldsymbol{y}\left(t\right)=\boldsymbol{C}\boldsymbol{x}\left(t\right)+\boldsymbol{D}\boldsymbol{u}\left(t\right)
+\end{cases}
+\end{eqnarray*}
+
+where $\boldsymbol{x}\in\mathbb{R}^{n},\boldsymbol{u}\in\mathbb{R}^{m},\boldsymbol{y}\in\mathbb{R}^{r}$. 
+
+\begin{align*}
+\left[\dot{\boldsymbol{x}}\left(t\right)\right]_{n\times1} & =\left[\boldsymbol{A}\right]_{n\times n}\left[\boldsymbol{x}\left(t\right)\right]_{n\times1}+\left[\boldsymbol{B}\right]_{n\times m}\left[\boldsymbol{u}\left(t\right)\right]_{m\times1}\\
+\left[\boldsymbol{y}\left(t\right)\right]_{r\times1} & =\left[\boldsymbol{C}\right]_{r\times n}\left[\boldsymbol{x}\left(t\right)\right]_{n\times1}+\left[\boldsymbol{D}\right]_{r\times m}\left[\boldsymbol{u}\left(t\right)\right]_{m\times1}
+\end{align*}
+
+\subsection*{Canonical realization}
+\[
+P(s) = \frac{b_ns^n + b_{n-1}s^{n-1} + \ldots + b_1s + b_0}{s^n + a_{n-1}s^{n-1} + \ldots + a_1s + a_0}, \quad a_n = 1
+\]
+\subsubsection*{Companion form}
+\[
+\left[\begin{array}{cccc|c}
+0 & 1 & \cdots & 0 & 0\\
+\vdots & \vdots & \ddots & \vdots & \vdots\\
+0 & 0 & \cdots & 1 & 0\\
+-a_{0} & -a_{1} & \cdots & -a_{n-1} & 1\\
+\hline b_{0}-b_{n}a_{0} & b_{1}-b_{n}a_{n} & \cdots & b_{n-1}-b_{n}a_{n-1} & b_{n}
+\end{array}\right]
+\]
+
+\subsubsection*{Observer form}
+\[
+\left[\begin{array}{cccc|c}
+-a_{n-1} & 1 & \cdots & 0 & b_{n-1}-b_{n}a_{n-1}\\
+\vdots & \vdots & \ddots & \vdots & \vdots\\
+-a_{1} & 0 & \cdots & 1 & b_{1}-b_{n}a_{1}\\
+-a_{0} & 0 & \cdots & 0 & b_{0}-b_{n}a_{0}\\
+\hline 1 & 0 & \cdots & 0 & b_{n}
+\end{array}\right]
+\]
+
+\subsection*{State equation solution}
+\[ \boldsymbol{x}(t) = e^{\boldsymbol{A}t}\boldsymbol{x_0} + \int_{0}^{t} e^{\boldsymbol{A}(t-\tau)}\boldsymbol{B}u(\tau)d\tau \]
+
+\subsubsection*{Transformed solution}
+
+\begin{align*}
+x(s) & = (s\boldsymbol{I} - \boldsymbol{A})^{-1}x_0 + (s\boldsymbol{I} - \boldsymbol{A})^{-1}\boldsymbol{B}u(s)\\
+y(s) & = \boldsymbol{C}(s\boldsymbol{I} - \boldsymbol{A})^{-1}x_0 + \left( \boldsymbol{C}(s\boldsymbol{I} - \boldsymbol{A})^{-1}\boldsymbol{B} + \boldsymbol{D} \right)u(s)
+\end{align*}
+
+\subsubsection*{Matrix similarity transformation}
+\( \tilde{\boldsymbol{A}}=\boldsymbol{T}^{-1}\boldsymbol{A}\boldsymbol{T}, \quad
+\tilde{\boldsymbol{B}}=\boldsymbol{T}^{-1}\boldsymbol{B}, \quad
+\tilde{\boldsymbol{C}}=\boldsymbol{C}\boldsymbol{T}, \quad
+\tilde{\boldsymbol{D}}=\boldsymbol{D} \)
+
+
+\section*{Observer based state feedback}
+\begin{center}
+    \includesvg[width=\linewidth]{figures/general_state_observer_control}
+\end{center}
+\[
+u\left(t\right)=f_{r}r\left(t\right)-\boldsymbol{F}\hat{\boldsymbol{x}}\left(t\right)
+\]
+
+\subsection*{Closed loop system equations}
+\begin{align*}
+\begin{bmatrix}\dot{\boldsymbol{x}}\left(t\right)\\
+\dot{\hat{\boldsymbol{x}}}\left(t\right)
+\end{bmatrix} & =\begin{bmatrix}\boldsymbol{A} & -\boldsymbol{B}\boldsymbol{F}\\
+\boldsymbol{L}\boldsymbol{C} & \boldsymbol{A}-\boldsymbol{B}\boldsymbol{F}-\boldsymbol{L}\boldsymbol{C}
+\end{bmatrix}\begin{bmatrix}\boldsymbol{x}\left(t\right)\\
+\hat{\boldsymbol{x}}\left(t\right)
+\end{bmatrix}+\begin{bmatrix}\boldsymbol{B}\\
+\boldsymbol{B}
+\end{bmatrix}f_{r}r\left(t\right)\\
+ & +\begin{bmatrix}\boldsymbol{B}\\
+0
+\end{bmatrix}d\left(t\right)+\begin{bmatrix}0\\
+\boldsymbol{L}
+\end{bmatrix}n\left(t\right)\\
+y\left(t\right) & =\begin{bmatrix}\boldsymbol{C} & 0\end{bmatrix}\begin{bmatrix}\boldsymbol{x}\left(t\right)\\
+\hat{\boldsymbol{x}}\left(t\right)
+\end{bmatrix}
+\end{align*}
+
+\subsection*{Closed loop transfer function}
+\[
+y(s)=\boldsymbol{C}(s\boldsymbol{I}-(\boldsymbol{A}-\boldsymbol{B}\boldsymbol{F}))^{-1}\boldsymbol{B}f_{r}r(s)
+\]
+
+\subsection*{Controller transfer function}
+\begin{align*}
+\dot{\hat{\boldsymbol{x}}}\left(t\right) & =\left(\boldsymbol{A}-\boldsymbol{L}\boldsymbol{C}\right)\hat{\boldsymbol{x}}\left(t\right)+\boldsymbol{B}u\left(t\right)+\boldsymbol{L}y\left(t\right)+\boldsymbol{L}n\left(t\right)
+\end{align*}
+
+\[
+u(s)=C_{r}\cdot r(s)-C_{y}\cdot(y(s)+n(s))
+\]
+
+where
+\(
+C_{r}=(\boldsymbol{I}-\boldsymbol{F}\phi^{-1}(s)\boldsymbol{B})f_{r}\ , C_{y}=\boldsymbol{F}\phi^{-1}(s)\boldsymbol{L}\), 
+and \(\phi(s)=(s\boldsymbol{I}-\boldsymbol{A}+\boldsymbol{B}\boldsymbol{F}+\boldsymbol{L}\boldsymbol{C})\)
+
+
+
+\section*{Disturbance generator}
+\begin{align*}
+\dot{\boldsymbol{x}}_{d}\left(t\right) & =\boldsymbol{A}_{d}\boldsymbol{x}_{d}\left(t\right)\\
+d\left(t\right) & =\boldsymbol{C}_{d}\boldsymbol{x}_{d}\left(t\right)
+\end{align*}
+\subsection*{The augmented realization}
+\begin{align*}
+\begin{bmatrix}\dot{\boldsymbol{x}}\left(t\right)\\
+\dot{\boldsymbol{x}}_{d}\left(t\right)
+\end{bmatrix} & =\left[\begin{array}{c|c}
+\boldsymbol{A} & \boldsymbol{B}\boldsymbol{C_{d}}\\
+\hline \boldsymbol{0} & \boldsymbol{A_{d}}
+\end{array}\right]\begin{bmatrix}\boldsymbol{x}\left(t\right)\\
+\boldsymbol{x}_{d}\left(t\right)
+\end{bmatrix}+\left[\begin{array}{c}
+\boldsymbol{B}\\
+\hline \boldsymbol{0}
+\end{array}\right]u\left(t\right)\\
+y\left(t\right) & =\left[\begin{array}{c|c}
+\boldsymbol{C} & \boldsymbol{0}\end{array}\right]\begin{bmatrix}\boldsymbol{x}\left(t\right)\\
+\boldsymbol{x}_{d}\left(t\right)
+\end{bmatrix}
+\end{align*}
