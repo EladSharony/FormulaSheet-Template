@@ -1,5 +1,9 @@
 # Formula Sheet Template
+Initially created for my students in **Control Theory**.
 
-Originally created for my students in the Control Theory course.
+## Getting Started
+- Simply edit `part_1.tex` (you can also add `part_2.tex`, `part_3.tex`, etc.).
+- Use the Basic LaTeX syntax (`\section*{}`, `\subsection*{}`, `\subsubsection*{}`).
 
+### Example
 <img src="example.png" alt="drawing" width="800"/>
